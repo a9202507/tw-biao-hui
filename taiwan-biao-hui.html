@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>台灣標會教學系統 🏦</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #e63946;
+    --red-light: #ff6b6b;
+    --gold: #f4a261;
+    --gold-light: #ffd166;
+    --green: #2a9d8f;
+    --green-light: #52c4b8;
+    --blue: #457b9d;
+    --blue-light: #a8dadc;
+    --navy: #1d3557;
+    --cream: #fef9ef;
+    --white: #ffffff;
+    --gray: #6c757d;
+    --light: #f8f9fa;
+    --shadow: 0 8px 32px rgba(29,53,87,0.12);
+    --radius: 20px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans TC', 'Nunito', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(circle at 10% 20%, rgba(244,162,97,0.12) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(230,57,70,0.08) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(42,157,143,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+
+  /* Header */
+  header {
+    background: linear-gradient(135deg, var(--navy) 0%, #2c4a6e 100%);
+    padding: 28px 0 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::after {
+    content: '💰🏮💰🏮💰🏮💰🏮💰🏮💰🏮💰';
+    position: absolute;
+    bottom: 0; left: 0;
+    font-size: 18px;
+    letter-spacing: 8px;
+    opacity: 0.15;
+    white-space: nowrap;
+  }
+  .header-icon { font-size: 56px; display: block; animation: bounce 2s ease-in-out infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  header h1 {
+    font-family: 'Nunito', 'Noto Sans TC', sans-serif;
+    font-size: clamp(24px, 5vw, 38px);
+    font-weight: 900;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  header p { color: rgba(255,255,255,0.75); margin-top: 6px; font-size: 14px; }
+
+  /* Nav tabs */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    padding: 20px 0 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .tab-btn {
+    background: var(--white);
+    border: 2px solid transparent;
+    border-radius: 50px;
+    padding: 10px 22px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Noto Sans TC', sans-serif;
+    cursor: pointer;
+    transition: all 0.25s;
+    color: var(--navy);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .tab-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .tab-btn.active {
+    background: var(--red);
+    color: white;
+    border-color: var(--red);
+    box-shadow: 0 4px 16px rgba(230,57,70,0.35);
+  }
+
+  /* Sections */
+  .section { display: none; padding: 32px 0 40px; animation: fadeIn 0.4s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+  /* Cards */
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .card-title {
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--navy);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Explain section */
+  .explain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .explain-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    border-top: 5px solid;
+    transition: transform 0.2s;
+  }
+  .explain-card:hover { transform: translateY(-4px); }
+  .explain-card:nth-child(1) { border-color: var(--red); }
+  .explain-card:nth-child(2) { border-color: var(--gold); }
+  .explain-card:nth-child(3) { border-color: var(--green); }
+  .explain-card:nth-child(4) { border-color: var(--blue); }
+  .explain-icon { font-size: 40px; margin-bottom: 12px; }
+  .explain-card h3 { font-size: 16px; font-weight: 800; margin-bottom: 8px; color: var(--navy); }
+  .explain-card p { font-size: 13px; line-height: 1.7; color: #555; }
+
+  .story-box {
+    background: linear-gradient(135deg, #fff7e6, #fff);
+    border: 2px dashed var(--gold);
+    border-radius: 16px;
+    padding: 24px;
+    margin: 20px 0;
+    position: relative;
+  }
+  .story-box::before { content: '📖'; position: absolute; top: -14px; left: 20px; font-size: 24px; background: var(--cream); padding: 0 6px; }
+  .story-box p { font-size: 14px; line-height: 1.9; color: #444; }
+
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 16px; }
+  .vocab-item {
+    background: var(--light);
+    border-radius: 12px;
+    padding: 14px 16px;
+    border-left: 4px solid var(--red);
+  }
+  .vocab-item .term { font-weight: 800; font-size: 15px; color: var(--red); }
+  .vocab-item .def { font-size: 12px; color: #666; margin-top: 4px; line-height: 1.5; }
+
+  /* Simulator section */
+  .sim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media(max-width: 700px) { .sim-grid { grid-template-columns: 1fr; } }
+
+  .form-group { margin-bottom: 18px; }
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 7px;
+  }
+  .form-group label .hint { font-weight: 400; color: var(--gray); font-size: 11px; margin-left: 4px; }
+
+  input[type="number"], select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.2s;
+    background: var(--white);
+    color: var(--navy);
+  }
+  input[type="number"]:focus, select:focus { outline: none; border-color: var(--red); }
+
+  .toggle-group { display: flex; gap: 10px; align-items: center; }
+  .toggle-btn {
+    padding: 8px 18px;
+    border: 2px solid #ddd;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: inherit;
+    background: white;
+    color: var(--gray);
+    transition: all 0.2s;
+  }
+  .toggle-btn.selected { background: var(--green); border-color: var(--green); color: white; }
+
+  .slider-container { display: flex; align-items: center; gap: 12px; }
+  input[type="range"] {
+    flex: 1;
+    height: 6px;
+    accent-color: var(--red);
+    cursor: pointer;
+  }
+  .slider-val {
+    min-width: 80px;
+    text-align: right;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--red);
+  }
+
+  .btn-run {
+    background: linear-gradient(135deg, var(--red), #c1121f);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 14px 40px;
+    font-size: 16px;
+    font-weight: 800;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 6px 24px rgba(230,57,70,0.35);
+    transition: all 0.25s;
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+  }
+  .btn-run:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(230,57,70,0.45); }
+
+  /* Results */
+  .result-hero {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    border-bottom: 4px solid;
+    transition: transform 0.2s;
+  }
+  .stat-card:hover { transform: scale(1.03); }
+  .stat-card:nth-child(1) { border-color: var(--red); }
+  .stat-card:nth-child(2) { border-color: var(--gold); }
+  .stat-card:nth-child(3) { border-color: var(--green); }
+  .stat-card:nth-child(4) { border-color: var(--blue); }
+  .stat-val { font-size: 24px; font-weight: 900; color: var(--navy); }
+  .stat-label { font-size: 11px; color: var(--gray); margin-top: 4px; font-weight: 600; }
+
+  /* Table */
+  .table-wrap { overflow-x: auto; border-radius: 16px; box-shadow: var(--shadow); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    background: var(--navy);
+    color: white;
+    padding: 12px 14px;
+    text-align: center;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  th:first-child { border-radius: 0; }
+  td {
+    padding: 10px 14px;
+    text-align: right;
+    border-bottom: 1px solid #f0f0f0;
+    white-space: nowrap;
+  }
+  td:first-child { text-align: center; font-weight: 700; }
+  td:nth-child(2) { text-align: left; }
+  tr:nth-child(even) td { background: #fafafa; }
+  tr:hover td { background: #fff3e0 !important; }
+  tr.highlight-row td { background: #fff0f0 !important; font-weight: 700; }
+  tr.highlight-row td:nth-child(3) { color: var(--red); font-size: 14px; }
+  .tag-hui { display: inline-block; background: var(--red); color: white; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .tag-active { display: inline-block; background: var(--green); color: white; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .tag-dead { display: inline-block; background: #bbb; color: white; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .pos { color: var(--green); font-weight: 700; }
+  .neg { color: var(--red); font-weight: 700; }
+
+  /* Chart */
+  .chart-container { height: 220px; position: relative; margin: 20px 0; }
+  canvas { width: 100% !important; }
+
+  /* IRR display */
+  .irr-display {
+    background: linear-gradient(135deg, var(--navy), #2c4a6e);
+    border-radius: 16px;
+    padding: 28px;
+    text-align: center;
+    color: white;
+    margin: 20px 0;
+  }
+  .irr-big { font-size: 52px; font-weight: 900; color: var(--gold-light); }
+  .irr-label { font-size: 14px; opacity: 0.8; margin-top: 4px; }
+  .irr-sub { font-size: 12px; opacity: 0.6; margin-top: 8px; line-height: 1.6; }
+
+  /* Quiz section */
+  .quiz-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+  }
+  .quiz-q { font-size: 17px; font-weight: 800; color: var(--navy); margin-bottom: 18px; line-height: 1.5; }
+  .quiz-num { display: inline-block; background: var(--red); color: white; border-radius: 50%; width: 28px; height: 28px; line-height: 28px; text-align: center; font-size: 13px; font-weight: 800; margin-right: 8px; }
+  .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media(max-width:500px){ .options { grid-template-columns: 1fr; } }
+  .option-btn {
+    background: var(--light);
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    color: var(--navy);
+  }
+  .option-btn:hover { border-color: var(--blue); background: #e8f4f8; transform: translateX(4px); }
+  .option-btn.correct { background: #d4edda; border-color: var(--green); color: #155724; }
+  .option-btn.wrong { background: #f8d7da; border-color: var(--red); color: #721c24; }
+
+  .feedback-box {
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-top: 14px;
+    font-size: 13px;
+    font-weight: 600;
+    display: none;
+    line-height: 1.6;
+  }
+  .feedback-box.show { display: block; }
+  .feedback-box.ok { background: #d4edda; color: #155724; border-left: 4px solid var(--green); }
+  .feedback-box.no { background: #f8d7da; color: #721c24; border-left: 4px solid var(--red); }
+
+  .score-board {
+    background: linear-gradient(135deg, var(--gold), #e8a010);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    color: var(--navy);
+    margin-top: 20px;
+    display: none;
+  }
+  .score-board.show { display: block; }
+  .score-big { font-size: 48px; font-weight: 900; }
+  .score-msg { font-size: 16px; font-weight: 700; margin-top: 8px; }
+  .btn-reset {
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 28px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 14px;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .btn-reset:hover { background: var(--red); }
+
+  /* Progress bar */
+  .progress-bar-wrap { background: #eee; border-radius: 50px; height: 8px; margin: 16px 0; }
+  .progress-bar { background: linear-gradient(90deg, var(--red), var(--gold)); height: 8px; border-radius: 50px; transition: width 0.4s; }
+
+  /* Flow diagram */
+  .flow-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0;
+    margin: 20px 0;
+  }
+  .flow-step {
+    background: var(--white);
+    border: 2px solid;
+    border-radius: 14px;
+    padding: 14px 18px;
+    text-align: center;
+    min-width: 110px;
+    font-size: 12px;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s;
+  }
+  .flow-step:hover { transform: scale(1.05); }
+  .flow-step .fs-icon { font-size: 26px; display: block; margin-bottom: 6px; }
+  .flow-arrow { font-size: 22px; color: var(--gray); padding: 0 6px; }
+  @media(max-width:600px){ .flow-arrow { transform: rotate(90deg); width: 100%; text-align: center; } }
+
+  /* Tip box */
+  .tip-box {
+    background: linear-gradient(135deg, #e8f4f8, #d0edf5);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    border-left: 4px solid var(--blue);
+    font-size: 13px;
+    line-height: 1.7;
+    color: #1a4a5e;
+  }
+  .tip-box strong { color: var(--blue); }
+
+  /* Responsive */
+  @media(max-width: 600px) {
+    .sim-grid { grid-template-columns: 1fr; }
+    .result-hero { grid-template-columns: 1fr 1fr; }
+    header h1 { font-size: 22px; }
+    .irr-big { font-size: 38px; }
+  }
+
+  /* Floating coins */
+  .coin {
+    position: fixed;
+    font-size: 22px;
+    pointer-events: none;
+    animation: floatUp 4s ease-in forwards;
+    z-index: 999;
+  }
+  @keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+    100% { opacity: 0; transform: translateY(-200px) rotate(360deg); }
+  }
+
+  /* Period selector */
+  .period-input-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .period-input-group input {
+    width: 90px;
+    flex-shrink: 0;
+  }
+  .period-input-group .period-label { font-size: 13px; color: var(--gray); }
+  .bid-amount-group { display: flex; gap: 10px; align-items: center; margin-top: 6px; }
+  .bid-amount-group input { flex: 1; }
+
+  .warning-box {
+    background: #fff3cd;
+    border: 1.5px solid #ffc107;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #856404;
+    margin-top: 8px;
+    display: none;
+  }
+  .warning-box.show { display: block; }
+
+  .section-header {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--navy);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <span class="header-icon">🏮</span>
+    <h1>台灣標會教學系統</h1>
+    <p>學習互助儲蓄的傳統智慧 — 適合國小生的金融教育</p>
+    <nav class="tabs">
+      <button class="tab-btn active" onclick="showTab('learn')">📚 什麼是標會？</button>
+      <button class="tab-btn" onclick="showTab('sim')">🧮 標會試算</button>
+      <button class="tab-btn" onclick="showTab('flow')">🔄 運作流程</button>
+      <button class="tab-btn" onclick="showTab('quiz')">🎯 小測驗</button>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ===== LEARN SECTION ===== -->
+  <div id="tab-learn" class="section active">
+    <div class="section-header">📚 什麼是標會？</div>
+
+    <div class="story-box">
+      <p>
+        <strong>想像一下：</strong> 你和10個好朋友每個月都存100元。每個月大家一起投票，讓最需要錢的人把所有人的100元都拿走！
+        這樣的互助儲蓄方式，在台灣叫做「<strong>標會</strong>」，已經流傳了幾百年！🏮
+      </p>
+    </div>
+
+    <div class="explain-grid">
+      <div class="explain-card">
+        <div class="explain-icon">👑</div>
+        <h3>會頭（組織者）</h3>
+        <p>負責召集大家、管理錢財的人。會頭通常在第一期就可以拿到所有會錢，但要負責保證整個標會順利進行到底。</p>
+      </div>
+      <div class="explain-card">
+        <div class="explain-icon">👥</div>
+        <h3>會員（參加者）</h3>
+        <p>每期都要繳交會錢的人。還沒得標叫「活會」，已經得標叫「死會」。活會交的錢比死會少一些。</p>
+      </div>
+      <div class="explain-card">
+        <div class="explain-icon">🏷️</div>
+        <h3>標（競標得錢）</h3>
+        <p>每期由還沒得標的會員出價，出最高標金的人贏得這一期的全部會錢。這就像一個互相幫忙借錢的系統！</p>
+      </div>
+      <div class="explain-card">
+        <div class="explain-icon">💰</div>
+        <h3>會錢（每期金額）</h3>
+        <p>每位會員每一期要繳的基本金額。活會繳的是（會錢 − 標金），死會繳的是整個會錢。</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:24px">
+      <div class="card-title">📖 重要名詞</div>
+      <div class="vocab-grid">
+        <div class="vocab-item"><div class="term">活會</div><div class="def">還沒有得標的會員，每期繳「會錢 − 標金」</div></div>
+        <div class="vocab-item"><div class="term">死會</div><div class="def">已經得標的會員，之後每期繳完整會錢</div></div>
+        <div class="vocab-item"><div class="term">標金</div><div class="def">競標時出的金額，出最高者得標</div></div>
+        <div class="vocab-item"><div class="term">會期</div><div class="def">整個標會從頭到尾的總期數</div></div>
+        <div class="vocab-item"><div class="term">會頭優惠</div><div class="def">會頭在第1期直接拿走全部會錢，不用競標</div></div>
+        <div class="vocab-item"><div class="term">年化報酬率</div><div class="def">換算成每年的獲利或成本百分比</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🌟 標會的好處與風險</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div style="background:#e8f5e9;border-radius:12px;padding:16px">
+          <div style="font-weight:800;color:#2e7d32;margin-bottom:8px">✅ 好處</div>
+          <ul style="font-size:13px;color:#2e7d32;padding-left:16px;line-height:1.9">
+            <li>幫助緊急需要錢的朋友</li>
+            <li>強迫儲蓄的好方法</li>
+            <li>不需要去銀行貸款</li>
+            <li>增進朋友感情</li>
+          </ul>
+        </div>
+        <div style="background:#ffebee;border-radius:12px;padding:16px">
+          <div style="font-weight:800;color:#c62828;margin-bottom:8px">⚠️ 風險</div>
+          <ul style="font-size:13px;color:#c62828;padding-left:16px;line-height:1.9">
+            <li>倒會：有人跑路不付錢</li>
+            <li>全靠誠信，沒有法律保護</li>
+            <li>後標者等待時間長</li>
+            <li>一旦加入很難退出</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>💡 小知識：</strong>台灣標會又叫「互助會」或「民間互助儲蓄」，是台灣非常有特色的民間金融傳統。
+      在農業時代，銀行不普及，大家就靠互助標會來籌措資金！現在台灣依然有很多人在參加標會哦。
+    </div>
+  </div>
+
+  <!-- ===== SIMULATOR SECTION ===== -->
+  <div id="tab-sim" class="section">
+    <div class="section-header">🧮 標會試算機</div>
+
+    <div class="sim-grid">
+      <div class="card">
+        <div class="card-title">⚙️ 基本設定</div>
+
+        <div class="form-group">
+          <label>參加人數 <span class="hint">（2～99人）</span></label>
+          <div class="slider-container">
+            <input type="range" id="memberCount" min="2" max="99" value="12" oninput="syncSlider('memberCount','memberCountVal')">
+            <div class="slider-val" id="memberCountVal">12 人</div>
+          </div>
+          <input type="number" id="memberCountNum" min="2" max="99" value="12" style="margin-top:8px" oninput="syncNum('memberCount','memberCountVal')">
+        </div>
+
+        <div class="form-group">
+          <label>每期會錢 <span class="hint">（1,000～100,000元）</span></label>
+          <div class="slider-container">
+            <input type="range" id="dueAmount" min="1000" max="100000" step="1000" value="10000" oninput="syncSlider('dueAmount','dueAmountVal')">
+            <div class="slider-val" id="dueAmountVal">$10,000</div>
+          </div>
+          <input type="number" id="dueAmountNum" min="1000" max="100000" step="1000" value="10000" style="margin-top:8px" oninput="syncNum('dueAmount','dueAmountVal')">
+        </div>
+
+        <div class="form-group">
+          <label>會期間隔</label>
+          <div class="toggle-group">
+            <button class="toggle-btn" id="freq-half" onclick="setFreq('half')">半個月</button>
+            <button class="toggle-btn selected" id="freq-month" onclick="setFreq('month')">一個月</button>
+            <button class="toggle-btn" id="freq-two" onclick="setFreq('two')">兩個月</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>會頭優惠 <span class="hint">（第1期免競標直接得標）</span></label>
+          <div class="toggle-group">
+            <button class="toggle-btn selected" id="boss-yes" onclick="setBoss(true)">✅ 有優惠</button>
+            <button class="toggle-btn" id="boss-no" onclick="setBoss(false)">❌ 無優惠</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🏷️ 我的競標設定</div>
+        <p style="font-size:13px;color:#666;margin-bottom:16px">設定你要在第幾期得標，以及願意出多少標金</p>
+
+        <div class="form-group">
+          <label>我要在第幾期得標 <span class="hint" id="period-range-hint">（第1～12期）</span></label>
+          <div class="period-input-group">
+            <input type="number" id="myPeriod" min="1" max="12" value="6">
+            <span class="period-label">期</span>
+          </div>
+          <div id="periodWarning" class="warning-box">⚠️ 超過最大期數或期數不合法</div>
+        </div>
+
+        <div class="form-group">
+          <label>我願意出的標金 <span class="hint">（最低500元）</span></label>
+          <div class="bid-amount-group">
+            <input type="number" id="myBid" min="500" max="99500" step="100" value="1000">
+            <span class="period-label">元</span>
+          </div>
+          <div id="bidWarning" class="warning-box">⚠️ 標金必須至少500元</div>
+        </div>
+
+        <div class="form-group">
+          <label>我的身份</label>
+          <div class="toggle-group">
+            <button class="toggle-btn" id="role-boss" onclick="setRole('boss')">👑 我是會頭</button>
+            <button class="toggle-btn selected" id="role-member" onclick="setRole('member')">👤 我是會員</button>
+          </div>
+          <div id="bossRoleNote" style="font-size:12px;color:var(--green);margin-top:6px;display:none">✅ 會頭第1期自動得標（若有優惠）</div>
+        </div>
+
+        <button class="btn-run" onclick="calculate()">🚀 開始計算！</button>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div id="results" style="display:none">
+      <div class="section-header" style="margin-top:8px">📊 計算結果</div>
+
+      <div class="result-hero">
+        <div class="stat-card">
+          <div class="stat-val" id="r-getAmount">-</div>
+          <div class="stat-label">🎉 我得標金額</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="r-totalPaid">-</div>
+          <div class="stat-label">💸 我總共繳了</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="r-netGain">-</div>
+          <div class="stat-label">📈 淨損益</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="r-duration">-</div>
+          <div class="stat-label">⏱️ 總會期時間</div>
+        </div>
+      </div>
+
+      <div class="irr-display">
+        <div style="font-size:14px;margin-bottom:8px;opacity:0.8">📐 年化報酬率（IRR）</div>
+        <div class="irr-big" id="r-irr">-</div>
+        <div class="irr-label" id="r-irr-label">-</div>
+        <div class="irr-sub" id="r-irr-desc">-</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">💹 每期現金流明細</div>
+        <div class="tip-box" style="margin-bottom:16px">
+          <strong>看表說明：</strong>
+          <span class="tag-hui">得標期</span> 代表我得標的那一期
+          &nbsp;<span class="tag-active">活會</span> 代表還沒得標（繳較少）
+          &nbsp;<span class="tag-dead">死會</span> 代表已得標（繳較多）
+          <br>💚 <strong>正數</strong>代表收到錢，❤️ <strong>負數</strong>代表付出去的錢
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>期數</th>
+                <th>狀態</th>
+                <th>我的現金流</th>
+                <th>說明</th>
+                <th>累計損益</th>
+              </tr>
+            </thead>
+            <tbody id="cashflowBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FLOW SECTION ===== -->
+  <div id="tab-flow" class="section">
+    <div class="section-header">🔄 標會運作流程</div>
+
+    <div class="card">
+      <div class="card-title">📋 一個標會的生命週期</div>
+      <div class="flow-diagram">
+        <div class="flow-step" style="border-color:var(--red)">
+          <span class="fs-icon">📣</span>
+          <div>召集</div>
+          <div style="font-size:10px;color:#888;font-weight:400">會頭找人加入</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="border-color:var(--gold)">
+          <span class="fs-icon">👑</span>
+          <div>第1期</div>
+          <div style="font-size:10px;color:#888;font-weight:400">會頭得標</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="border-color:var(--green)">
+          <span class="fs-icon">🏷️</span>
+          <div>競標</div>
+          <div style="font-size:10px;color:#888;font-weight:400">出最高價得標</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="border-color:var(--blue)">
+          <span class="fs-icon">💰</span>
+          <div>收錢</div>
+          <div style="font-size:10px;color:#888;font-weight:400">得標者收全部款</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="border-color:#9c27b0">
+          <span class="fs-icon">🔁</span>
+          <div>下一期</div>
+          <div style="font-size:10px;color:#888;font-weight:400">重複直到結束</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="border-color:#e91e63">
+          <span class="fs-icon">🎉</span>
+          <div>結束</div>
+          <div style="font-size:10px;color:#888;font-weight:400">所有人都得標</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔢 如何計算每期要繳多少錢？</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div style="background:#e3f2fd;border-radius:12px;padding:18px">
+          <div style="font-weight:800;color:#1565c0;font-size:14px;margin-bottom:10px">🌱 活會（未得標）繳：</div>
+          <div style="background:white;border-radius:8px;padding:12px;font-family:monospace;font-size:13px;text-align:center;font-weight:700;color:#1565c0">
+            會錢 − 得標標金
+          </div>
+          <div style="font-size:12px;color:#1565c0;margin-top:8px">例：會錢$10,000，標金$1,000<br>活會繳 = $9,000</div>
+        </div>
+        <div style="background:#fce4ec;border-radius:12px;padding:18px">
+          <div style="font-weight:800;color:#b71c1c;font-size:14px;margin-bottom:10px">☠️ 死會（已得標）繳：</div>
+          <div style="background:white;border-radius:8px;padding:12px;font-family:monospace;font-size:13px;text-align:center;font-weight:700;color:#b71c1c">
+            整個會錢
+          </div>
+          <div style="font-size:12px;color:#b71c1c;margin-top:8px">例：會錢$10,000<br>死會繳 = $10,000（全額）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 範例：10人標會，每期$10,000</div>
+      <div id="exampleTable"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🤔 早標 vs 晚標 有什麼不同？</div>
+      <div class="explain-grid" style="grid-template-columns:1fr 1fr">
+        <div class="explain-card" style="border-color:var(--red)">
+          <div class="explain-icon">⚡</div>
+          <h3>早期得標</h3>
+          <p>需要標高一點的標金才能得標。<br>好處：<strong>提早拿到一大筆錢</strong>，可以去做想做的事！<br>缺點：後續每期要繳全額，成本較高。</p>
+        </div>
+        <div class="explain-card" style="border-color:var(--green)">
+          <div class="explain-icon">🐢</div>
+          <h3>晚期得標</h3>
+          <p>前幾期繳較少，等別人先得標。<br>好處：<strong>繳出去的錢比較少</strong>，就像賺了利息！<br>缺點：等待時間很長，錢不夠緊急使用。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== QUIZ SECTION ===== -->
+  <div id="tab-quiz" class="section">
+    <div class="section-header">🎯 標會知識小測驗</div>
+
+    <div id="quizProgress" style="margin-bottom:16px">
+      <div style="font-size:13px;color:var(--gray);margin-bottom:6px">答題進度 <span id="progressText">0/6</span></div>
+      <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+    </div>
+
+    <div id="quizContainer"></div>
+
+    <div class="score-board" id="scoreBoard">
+      <div class="score-big" id="finalScore">-</div>
+      <div class="score-msg" id="scoreMsg">-</div>
+      <button class="btn-reset" onclick="resetQuiz()">🔄 再玩一次</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ===== STATE =====
+let freq = 'month';
+let hasBossBonus = true;
+let myRole = 'member';
+
+// ===== HELPERS =====
+function fmt(n) {
+  if (Math.abs(n) >= 10000) return '$' + (n/10000).toFixed(1) + '萬';
+  return '$' + n.toLocaleString('zh-TW');
+}
+function fmtFull(n) {
+  return (n >= 0 ? '+' : '') + '$' + Math.round(n).toLocaleString('zh-TW');
+}
+
+function syncSlider(id, valId) {
+  const slider = document.getElementById(id);
+  const numInput = document.getElementById(id + 'Num');
+  const valEl = document.getElementById(valId);
+  const v = parseInt(slider.value);
+  if (numInput) numInput.value = v;
+  if (id === 'memberCount') {
+    valEl.textContent = v + ' 人';
+    updatePeriodHint();
+  } else if (id === 'dueAmount') {
+    valEl.textContent = '$' + v.toLocaleString('zh-TW');
+  }
+}
+function syncNum(id, valId) {
+  const numInput = document.getElementById(id + 'Num');
+  const slider = document.getElementById(id);
+  const valEl = document.getElementById(valId);
+  let v = parseInt(numInput.value) || parseInt(slider.min);
+  v = Math.max(parseInt(slider.min), Math.min(parseInt(slider.max), v));
+  slider.value = v;
+  if (id === 'memberCount') {
+    valEl.textContent = v + ' 人';
+    updatePeriodHint();
+  } else if (id === 'dueAmount') {
+    valEl.textContent = '$' + v.toLocaleString('zh-TW');
+  }
+}
+function updatePeriodHint() {
+  const n = getMemberCount();
+  document.getElementById('period-range-hint').textContent = `（第1～${n}期）`;
+  document.getElementById('myPeriod').max = n;
+}
+function getMemberCount() { return parseInt(document.getElementById('memberCount').value); }
+function getDueAmount() { return parseInt(document.getElementById('dueAmount').value); }
+function getMyPeriod() { return parseInt(document.getElementById('myPeriod').value); }
+function getMyBid() { return parseInt(document.getElementById('myBid').value); }
+
+function setFreq(f) {
+  freq = f;
+  ['half','month','two'].forEach(x => document.getElementById('freq-'+x).classList.remove('selected'));
+  document.getElementById('freq-'+f).classList.add('selected');
+}
+function setBoss(b) {
+  hasBossBonus = b;
+  document.getElementById('boss-yes').classList.toggle('selected', b);
+  document.getElementById('boss-no').classList.toggle('selected', !b);
+}
+function setRole(r) {
+  myRole = r;
+  document.getElementById('role-boss').classList.toggle('selected', r === 'boss');
+  document.getElementById('role-member').classList.toggle('selected', r === 'member');
+  const bossNote = document.getElementById('bossRoleNote');
+  bossNote.style.display = (r === 'boss') ? 'block' : 'none';
+  if (r === 'boss') {
+    document.getElementById('myPeriod').value = 1;
+    document.getElementById('myBid').value = 0;
+    document.getElementById('myBid').disabled = true;
+  } else {
+    document.getElementById('myBid').disabled = false;
+  }
+}
+
+function showTab(t) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + t).classList.add('active');
+  event.target.classList.add('active');
+  if (t === 'flow') buildExampleTable();
+}
+
+// ===== CORE CALCULATION =====
+function calculate() {
+  const n = getMemberCount();
+  const due = getDueAmount();
+  const myPeriod = getMyPeriod();
+  const myBid = (myRole === 'boss' && hasBossBonus) ? 0 : getMyBid();
+
+  // Validate
+  const periodWarn = document.getElementById('periodWarning');
+  const bidWarn = document.getElementById('bidWarning');
+  periodWarn.classList.remove('show');
+  bidWarn.classList.remove('show');
+
+  if (myPeriod < 1 || myPeriod > n) { periodWarn.classList.add('show'); return; }
+  if (myRole !== 'boss' && myBid < 500) { bidWarn.classList.add('show'); return; }
+
+  // Build cashflows for me
+  // Period 1: if boss bonus, period 1 auto-wins; otherwise bidding
+  // My "get" amount: total from all members that period
+  // Active member pays: due - bidAmount
+  // Dead member pays: due
+
+  // Simulate: who wins each period? We'll generate fictitious bids for others
+  // My bid is myBid at myPeriod. Others will bid so we know if I can win.
+
+  const rows = [];
+  let cumulative = 0;
+
+  for (let p = 1; p <= n; p++) {
+    const isMyPeriod = p === myPeriod;
+    const isBefore = p < myPeriod;
+    const isAfter = p > myPeriod;
+
+    // My status this period
+    let myStatus = isBefore ? '活會' : (isMyPeriod ? '得標' : '死會');
+
+    // This period's winning bid (for calculating what active members pay)
+    // For my period: use myBid
+    // For other periods: generate a plausible bid (varies so cashflows differ)
+    let thisBid;
+    if (isMyPeriod) {
+      thisBid = (myRole === 'boss' && hasBossBonus && p === 1) ? 0 : myBid;
+    } else {
+      // Simulate other period bids: random-ish but plausible
+      const seed = (p * 137 + n * 31) % 7;
+      const bidFractions = [0.05, 0.08, 0.10, 0.06, 0.12, 0.07, 0.09];
+      thisBid = Math.round(due * bidFractions[seed] / 100) * 100;
+      thisBid = Math.max(500, thisBid);
+    }
+
+    // Count active members this period (haven't won yet, excluding this period's winner)
+    // For simplicity: before myPeriod, all n members active; 
+    // at myPeriod: I'm the winner; after: I'm dead
+
+    // My cash flow this period:
+    let myCash = 0;
+    let desc = '';
+
+    if (isMyPeriod) {
+      // I win: I receive from others
+      // Active members (haven't won yet, not me): pay (due - thisBid)
+      // Dead members (won before me): pay due
+      // How many won before? p-1 (periods 1..p-1 each had a winner, none is me)
+      const deadCount = p - 1; // won before me
+      const activeCount = n - p; // haven't won yet, not me
+      const received = deadCount * due + activeCount * (due - thisBid);
+      myCash = received;
+      desc = `得標！收到 ${deadCount}個死會×$${due.toLocaleString()} + ${activeCount}個活會×$${(due-thisBid).toLocaleString()}`;
+    } else if (isBefore) {
+      // Active: pay (due - thisBid)
+      myCash = -(due - thisBid);
+      desc = `活會繳：$${due.toLocaleString()} - 標金$${thisBid.toLocaleString()}`;
+    } else {
+      // Dead: pay full due
+      myCash = -due;
+      desc = `死會繳：全額 $${due.toLocaleString()}`;
+    }
+
+    cumulative += myCash;
+    rows.push({ period: p, status: myStatus, cash: myCash, desc, cumulative, thisBid });
+  }
+
+  // Calc IRR (Newton's method on cashflows as monthly)
+  const freqMonths = freq === 'half' ? 0.5 : freq === 'month' ? 1 : 2;
+  // Build cashflow array by month
+  const cashByMonth = rows.map((r, i) => ({ t: i * freqMonths, cf: r.cash }));
+  const irrMonthly = computeIRR(cashByMonth);
+  const irrAnnual = irrMonthly !== null ? (Math.pow(1 + irrMonthly, 12) - 1) : null;
+
+  // Summary stats
+  const myGet = rows.find(r => r.status === '得標').cash;
+  const totalPaid = rows.filter(r => r.status !== '得標').reduce((s, r) => s + (-r.cash), 0);
+  const net = myGet - totalPaid;
+  const totalMonths = (n - 1) * freqMonths;
+  const freqLabel = freq === 'half' ? '半月' : freq === 'month' ? '月' : '雙月';
+
+  document.getElementById('r-getAmount').textContent = fmt(myGet);
+  document.getElementById('r-totalPaid').textContent = fmt(totalPaid);
+  document.getElementById('r-netGain').textContent = fmtFull(net);
+  document.getElementById('r-netGain').style.color = net >= 0 ? 'var(--green)' : 'var(--red)';
+  document.getElementById('r-duration').textContent = `${n}期 / ${totalMonths}月`;
+
+  if (irrAnnual !== null) {
+    const irrPct = (irrAnnual * 100).toFixed(2) + '%';
+    document.getElementById('r-irr').textContent = irrPct;
+    document.getElementById('r-irr').style.color = irrAnnual >= 0 ? 'var(--gold-light)' : '#ff6b6b';
+    document.getElementById('r-irr-label').textContent = irrAnnual >= 0 ? '🎉 對你來說是「賺到」的！' : '💸 對你來說有「機會成本」';
+    document.getElementById('r-irr-desc').textContent = 
+      irrAnnual >= 0
+        ? `年化報酬率${irrPct}，意思是你把錢放在這個標會，等於每年有${irrPct}的利潤！`
+        : `年化成本${irrPct}，意思是你提早拿到錢所付出的利息成本約每年${irrPct}。`;
+  } else {
+    document.getElementById('r-irr').textContent = '無法計算';
+    document.getElementById('r-irr-label').textContent = '';
+    document.getElementById('r-irr-desc').textContent = '現金流無法計算IRR';
+  }
+
+  // Build table
+  const tbody = document.getElementById('cashflowBody');
+  tbody.innerHTML = '';
+  rows.forEach(r => {
+    const tr = document.createElement('tr');
+    if (r.status === '得標') tr.classList.add('highlight-row');
+    const tagClass = r.status === '得標' ? 'tag-hui' : r.status === '活會' ? 'tag-active' : 'tag-dead';
+    const cashClass = r.cash >= 0 ? 'pos' : 'neg';
+    const cumClass = r.cumulative >= 0 ? 'pos' : 'neg';
+    tr.innerHTML = `
+      <td>第${r.period}期</td>
+      <td><span class="${tagClass}">${r.status}</span></td>
+      <td class="${cashClass}">${fmtFull(r.cash)}</td>
+      <td style="font-size:12px;text-align:left;color:#555">${r.desc}</td>
+      <td class="${cumClass}">${fmtFull(r.cumulative)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById('results').style.display = 'block';
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  spawnCoins();
+}
+
+// IRR via Newton's method (monthly rate)
+function computeIRR(cfs) {
+  // NPV(r) = sum cf_i * (1+r)^(-t_i) = 0
+  let r = 0.01;
+  for (let iter = 0; iter < 200; iter++) {
+    let npv = 0, dnpv = 0;
+    for (const { t, cf } of cfs) {
+      const disc = Math.pow(1 + r, -t);
+      npv += cf * disc;
+      dnpv += -t * cf * disc / (1 + r);
+    }
+    if (Math.abs(dnpv) < 1e-12) break;
+    const rNew = r - npv / dnpv;
+    if (Math.abs(rNew - r) < 1e-8) { r = rNew; break; }
+    r = rNew;
+    if (r < -0.9999) r = -0.9999;
+  }
+  if (!isFinite(r)) return null;
+  return r;
+}
+
+function spawnCoins() {
+  for (let i = 0; i < 8; i++) {
+    setTimeout(() => {
+      const coin = document.createElement('div');
+      coin.className = 'coin';
+      coin.textContent = ['💰','🪙','💎','✨'][Math.floor(Math.random()*4)];
+      coin.style.left = Math.random() * 90 + 'vw';
+      coin.style.bottom = '20px';
+      document.body.appendChild(coin);
+      setTimeout(() => coin.remove(), 4000);
+    }, i * 200);
+  }
+}
+
+// ===== EXAMPLE TABLE =====
+function buildExampleTable() {
+  const n = 5, due = 10000;
+  const bids = [0, 1000, 800, 500, 300]; // period -> bid
+  let html = '<div class="table-wrap"><table><thead><tr><th>期數</th><th>得標者</th><th>標金</th><th>活會繳</th><th>死會繳</th><th>得標者收到</th></tr></thead><tbody>';
+  for (let p = 1; p <= n; p++) {
+    const bid = bids[p-1];
+    const active = due - bid;
+    const activeCount = n - p;
+    const deadCount = p - 1;
+    const received = activeCount * active + deadCount * due;
+    html += `<tr>
+      <td>第${p}期</td>
+      <td>會員${p}${p===1?'（會頭）':''}</td>
+      <td>$${bid.toLocaleString()}</td>
+      <td style="color:var(--green)">$${active.toLocaleString()}</td>
+      <td style="color:var(--red)">$${due.toLocaleString()}</td>
+      <td style="font-weight:700;color:var(--navy)">$${received.toLocaleString()}</td>
+    </tr>`;
+  }
+  html += '</tbody></table></div>';
+  html += `<div class="tip-box" style="margin-top:12px">以上為5人標會、每期$10,000的示範。第1期會頭直接得標，標金為$0。之後每期標金遞減，代表大家搶著早日得標但也逐漸不急了。</div>`;
+  document.getElementById('exampleTable').innerHTML = html;
+}
+
+// ===== QUIZ =====
+const quizData = [
+  {
+    q: '在標會中，「活會」是指什麼？',
+    options: ['已經得標的人', '還沒有得標的人', '會頭本人', '沒有繳錢的人'],
+    ans: 1,
+    explain: '✅ 正確！「活會」就是還沒有得標的會員，每期繳的錢是「會錢 − 標金」，比已得標的人少一些。'
+  },
+  {
+    q: '假設每期會錢是$10,000，這一期標金是$1,500，活會的會員要繳多少錢？',
+    options: ['$10,000', '$11,500', '$8,500', '$1,500'],
+    ans: 2,
+    explain: '✅ 正確！活會繳的是「會錢 − 標金」= $10,000 - $1,500 = $8,500。'
+  },
+  {
+    q: '標會中「會頭優惠」是什麼意思？',
+    options: ['會頭每期都不用繳錢', '會頭第一期直接得標，不需要競標', '會頭可以把錢借給別人', '會頭可以決定誰得標'],
+    ans: 1,
+    explain: '✅ 正確！有「會頭優惠」時，會頭（召集人）在第一期就可以直接拿到所有會錢，不需要競標。這是因為他負責組織和管理整個標會。'
+  },
+  {
+    q: '如果在標會中「早期得標」，對你來說意味著什麼？',
+    options: ['可以提早拿到一大筆錢，但後期每期要繳全額', '完全免費，不需要再繳錢', '得到的錢比較少', '只需要繳一半的錢'],
+    ans: 0,
+    explain: '✅ 正確！早期得標可以提早拿到錢，但代價是之後每一期都要繳全額（死會），成本比較高。'
+  },
+  {
+    q: '「死會」的會員每期要繳多少錢？',
+    options: ['會錢 − 標金', '不用繳任何錢', '整個會錢金額（全額）', '只需繳一半'],
+    ans: 2,
+    explain: '✅ 正確！「死會」是已經得標的會員，之後每期都要繳完整的會錢，不能扣掉標金。'
+  },
+  {
+    q: '標會最大的風險是什麼？',
+    options: ['銀行不讓加入', '有人得標後不繼續繳錢（倒會）', '只能參加一次', '會期太短，賺不了多少'],
+    ans: 1,
+    explain: '✅ 正確！標會最大的風險是「倒會」，就是有人得標後消失不見，不再繳錢。標會沒有法律保障，完全靠大家的誠信！'
+  }
+];
+
+let answered = new Array(quizData.length).fill(false);
+let correctCount = 0;
+
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  quizData.forEach((q, qi) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-card';
+    div.id = 'quiz-' + qi;
+    div.innerHTML = `
+      <div class="quiz-q"><span class="quiz-num">${qi+1}</span>${q.q}</div>
+      <div class="options">
+        ${q.options.map((o, oi) => `<button class="option-btn" id="opt-${qi}-${oi}" onclick="answer(${qi},${oi})">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}
+      </div>
+      <div class="feedback-box" id="fb-${qi}"></div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function answer(qi, chosen) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+  const q = quizData[qi];
+  const isCorrect = chosen === q.ans;
+  if (isCorrect) correctCount++;
+
+  q.options.forEach((_, oi) => {
+    const btn = document.getElementById(`opt-${qi}-${oi}`);
+    btn.disabled = true;
+    if (oi === q.ans) btn.classList.add('correct');
+    else if (oi === chosen && !isCorrect) btn.classList.add('wrong');
+  });
+
+  const fb = document.getElementById('fb-' + qi);
+  fb.className = 'feedback-box show ' + (isCorrect ? 'ok' : 'no');
+  fb.textContent = isCorrect ? q.explain : '❌ 答錯了！' + q.explain;
+
+  const doneCount = answered.filter(Boolean).length;
+  document.getElementById('progressText').textContent = doneCount + '/' + quizData.length;
+  document.getElementById('progressBar').style.width = (doneCount / quizData.length * 100) + '%';
+
+  if (doneCount === quizData.length) showScore();
+}
+
+function showScore() {
+  const board = document.getElementById('scoreBoard');
+  board.classList.add('show');
+  const pct = Math.round(correctCount / quizData.length * 100);
+  document.getElementById('finalScore').textContent = correctCount + ' / ' + quizData.length + ' 題';
+  const msgs = ['再多練習一下吧！📚', '有進步！繼續加油！🌟', '答得不錯！再接再厲！💪', '很厲害！快要滿分了！🔥', '完美！你是標會小達人！🏆🎉'];
+  const msgIdx = Math.floor(pct / 25);
+  document.getElementById('scoreMsg').textContent = msgs[Math.min(msgIdx, 4)];
+  board.scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetQuiz() {
+  answered = new Array(quizData.length).fill(false);
+  correctCount = 0;
+  document.getElementById('progressText').textContent = '0/' + quizData.length;
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('scoreBoard').classList.remove('show');
+  buildQuiz();
+}
+
+// ===== INIT =====
+window.onload = function() {
+  buildQuiz();
+  updatePeriodHint();
+  buildExampleTable();
+};
+</script>
+</body>
+</html>
